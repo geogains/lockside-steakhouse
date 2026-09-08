@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, animate, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { useCarousel } from "@/hooks/useCarousel";
 
 export type CarouselSlide = {
   id: string;
@@ -22,8 +22,6 @@ type CarouselProps = {
   "aria-label"?: string;
 };
 
-const SPRING = { type: "spring" as const, stiffness: 300, damping: 30 };
-
 /**
  * A single large image at a time, sliding exactly one viewport-width per
  * step. The viewport's pixel width is tracked with a ResizeObserver (not
@@ -36,49 +34,10 @@ export const Carousel = ({
   className,
   "aria-label": ariaLabel = "Image carousel",
 }: CarouselProps) => {
-  const reduced = useReducedMotion();
-  const [index, setIndex] = useState(0);
-  const [width, setWidth] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-
   const total = slides.length;
+  const { index, goTo, previous, next, onKeyDown, containerRef, x, canPrevious, canNext } =
+    useCarousel(total);
   const current = slides[index];
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return undefined;
-    const observer = new ResizeObserver((entries) => {
-      const entry = entries[0];
-      if (entry) setWidth(entry.contentRect.width);
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const target = -index * width;
-    if (reduced) {
-      x.set(target);
-      return undefined;
-    }
-    const controls = animate(x, target, SPRING);
-    return () => controls.stop();
-  }, [index, width, reduced, x]);
-
-  const goTo = (next: number) => setIndex(Math.min(Math.max(next, 0), total - 1));
-  const previous = () => goTo(index - 1);
-  const next = () => goTo(index + 1);
-
-  const onKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      next();
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      previous();
-    }
-  };
 
   if (!current) return null;
 
@@ -130,7 +89,7 @@ export const Carousel = ({
         <button
           type="button"
           onClick={previous}
-          disabled={index === 0}
+          disabled={!canPrevious}
           aria-label="Previous image"
           className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center
                      justify-center rounded-full border border-line bg-ink/50 text-bone
@@ -142,7 +101,7 @@ export const Carousel = ({
         <button
           type="button"
           onClick={next}
-          disabled={index === total - 1}
+          disabled={!canNext}
           aria-label="Next image"
           className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center
                      justify-center rounded-full border border-line bg-ink/50 text-bone

@@ -154,7 +154,7 @@ export const Navbar = () => {
             className="flex min-w-0 shrink-0 items-center py-2"
             aria-label={`${restaurant.name} — home`}
           >
-            <Logo className="h-10 w-auto md:h-12" />
+            <Logo className="h-11 w-auto md:h-14" />
           </Link>
 
           {/* Desktop navigation */}

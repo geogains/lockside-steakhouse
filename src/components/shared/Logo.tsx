@@ -2,7 +2,7 @@
  * The single source of truth for the Lockside Steakhouse brand logo
  * (bull mark + wordmark). Update the asset here to change it everywhere.
  */
-const LOGO_SRC = "/lockside-logo.png";
+const LOGO_SRC = "/lockside1.png";
 const LOGO_WIDTH = 1795;
 const LOGO_HEIGHT = 590;
 
