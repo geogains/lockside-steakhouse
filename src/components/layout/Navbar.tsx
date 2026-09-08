@@ -6,6 +6,7 @@ import { primaryNav, navHref } from "@/data/navigation";
 import { restaurant } from "@/data/restaurant";
 import { Button } from "@/components/shared/Button";
 import { Logo } from "@/components/shared/Logo";
+import { SocialLinks } from "@/components/shared/SocialLinks";
 import { cn } from "@/lib/cn";
 
 const NAV_HEIGHT = "h-16 md:h-20";
@@ -130,12 +131,6 @@ export const Navbar = () => {
 
   const isActive = (to?: string) =>
     Boolean(to) && (to === "/" ? location.pathname === "/" : location.pathname === to);
-
-  /* Same social destinations as the footer, just looked up by label so the
-     mobile drawer can render them in its own prescribed order (Instagram,
-     then Facebook) independent of the footer's own order. */
-  const instagramProfile = restaurant.social.find((profile) => profile.label === "Instagram");
-  const facebookProfile = restaurant.social.find((profile) => profile.label === "Facebook");
 
   return (
     <>
@@ -278,36 +273,9 @@ export const Navbar = () => {
                 </Button>
               </div>
 
-              {/* Same destinations as the footer's social links. No card or
-                  border here — just a quiet, centred pair of touch targets
-                  below the primary CTAs. */}
-              {instagramProfile || facebookProfile ? (
-                <div className="mt-6 flex items-center justify-center gap-4">
-                  {instagramProfile ? (
-                    <a
-                      href={instagramProfile.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${restaurant.shortName} on Instagram, opens in a new tab`}
-                      className="flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-80"
-                    >
-                      <img src="/insta.png" alt="Instagram" className="h-5 w-5 object-contain" />
-                    </a>
-                  ) : null}
-                  <span aria-hidden="true" className="h-6 w-px bg-bone/30" />
-                  {facebookProfile ? (
-                    <a
-                      href={facebookProfile.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${restaurant.shortName} on Facebook, opens in a new tab`}
-                      className="flex h-11 w-11 items-center justify-center transition-opacity hover:opacity-80"
-                    >
-                      <img src="/facebook.png" alt="Facebook" className="h-5 w-5 object-contain" />
-                    </a>
-                  ) : null}
-                </div>
-              ) : null}
+              {/* Same destinations as the footer's social links — literally
+                  the same component, so the two stay identical. */}
+              <SocialLinks className="mt-6 justify-center" />
             </nav>
           </motion.div>
         ) : null}

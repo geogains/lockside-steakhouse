@@ -61,10 +61,13 @@ export const MenuShowcase = () => {
 
       {/* Horizontal scroll-snap on small screens, grid from md up. Real links
           inside a plain list keep this keyboard- and screen-reader-friendly
-          without a bespoke carousel. */}
+          without a bespoke carousel. `touch-pan-x` tells the browser this
+          element only consumes horizontal pan gestures, so a swipe that
+          drifts vertically hands straight off to normal page scrolling
+          instead of the two axes fighting each other. */}
       <ul
         className="mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4
-                   [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+                   touch-pan-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
                    md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:pb-0
                    xl:grid-cols-4"
       >
@@ -75,6 +78,14 @@ export const MenuShowcase = () => {
               as="li"
               key={menu.id}
               delay={0.06 * index}
+              /* No vertical travel on these cards specifically: they sit in
+                 a horizontally-swiped track, and `whileInView`'s default
+                 rise-on-entry (a y transform) was triggering as each card
+                 scrolled into view *horizontally* for the first time —
+                 fighting the swipe with a vertical pop that read as the
+                 whole card drifting off its track. Fading in with no
+                 y-offset keeps the same entrance polish without it. */
+              distance={0}
               className="w-[78vw] shrink-0 snap-start sm:w-[60vw] md:w-auto"
             >
               <Link

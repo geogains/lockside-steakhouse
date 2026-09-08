@@ -138,22 +138,6 @@ export const Visit = () => {
               </p>
             </div>
           </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row">
-            <Button as="a" href={restaurant.urls.directions} external>
-              <Navigation className="h-4 w-4" aria-hidden="true" />
-              Get Directions
-            </Button>
-            <Button
-              as="a"
-              href={`tel:${restaurant.telephone.dial}`}
-              variant="secondary"
-              className="text-bone"
-            >
-              <Phone className="h-4 w-4" aria-hidden="true" />
-              Call Now
-            </Button>
-          </div>
         </Reveal>
 
         {/* Maps — one landscape panel per location, stacked to roughly fill
@@ -197,6 +181,26 @@ export const Visit = () => {
           </div>
         </Reveal>
       </div>
+
+      {/* Final CTAs, moved below both the info column and the maps so they
+          always close the section — on the single-column mobile stack and
+          on the two-column desktop grid alike — rather than sitting between
+          opening hours and the maps. */}
+      <Reveal delay={0.2} className="mt-12 flex flex-col gap-3 sm:flex-row">
+        <Button as="a" href={restaurant.urls.directions} external>
+          <Navigation className="h-4 w-4" aria-hidden="true" />
+          Get Directions
+        </Button>
+        <Button
+          as="a"
+          href={`tel:${restaurant.telephone.dial}`}
+          variant="secondary"
+          className="text-bone"
+        >
+          <Phone className="h-4 w-4" aria-hidden="true" />
+          Call Now
+        </Button>
+      </Reveal>
     </Section>
   );
 };

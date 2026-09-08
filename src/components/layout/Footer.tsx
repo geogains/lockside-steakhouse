@@ -2,13 +2,9 @@ import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { Eyebrow } from "@/components/shared/SectionHeading";
+import { SocialLinks } from "@/components/shared/SocialLinks";
 import { restaurant, locations, hoursSummary } from "@/data/restaurant";
 import { footerNav, legalNav, navHref } from "@/data/navigation";
-
-const socialIcons: Record<string, string> = {
-  Facebook: "/facebook.png",
-  Instagram: "/insta.png",
-};
 
 export const Footer = () => (
   <footer
@@ -23,29 +19,7 @@ export const Footer = () => (
           Independent steakhouses in Wollaston, Stourbridge and Telford. Beef
           from a local butchery, generous plates and a warm welcome.
         </p>
-        <ul className="mt-6 flex gap-3">
-          {restaurant.social.map((profile) => {
-            const icon = socialIcons[profile.label];
-            return (
-              <li key={profile.label}>
-                <a
-                  href={profile.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${restaurant.shortName} on ${profile.label}, opens in a new tab`}
-                  className="flex h-11 w-11 items-center justify-center rounded-card border border-line
-                             transition-colors hover:border-brass"
-                >
-                  {icon ? (
-                    <img src={icon} alt={profile.label} className="h-5 w-5 object-contain" />
-                  ) : (
-                    profile.label
-                  )}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+        <SocialLinks className="mt-6" />
       </div>
 
       {/* Contact */}
