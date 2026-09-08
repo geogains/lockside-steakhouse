@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
-import heroImage from "@/assets/hero/hero-signature-steak.webp";
 import { BookingButtons } from "@/components/shared/BookingButtons";
 
 export const Hero = () => {
@@ -20,21 +19,29 @@ export const Hero = () => {
       aria-label="Welcome"
       className="relative flex min-h-[100svh] items-center overflow-hidden bg-ink"
     >
-      {/* Hero photograph. Explicit dimensions prevent layout shift, and the
-          focal point moves down on narrow screens so the steak stays centred. */}
-      <img
-        src={heroImage}
-        alt="A large chargrilled steak resting on a wooden serving board with chunky chips, roasted tomato and dipping sauces"
-        width={2000}
-        height={1414}
-        loading="eager"
-        decoding="async"
-        {...{ fetchpriority: "high" }}
-        className="absolute inset-0 h-full w-full object-cover object-[52%_62%] md:object-[50%_50%]"
-      />
+      {/* Hero background video. Purely decorative — the heading/copy below
+          carry the same meaning for assistive tech, so it's aria-hidden and
+          pointer-events-none rather than exposing any playback UI. The
+          section's own min-h-[100svh] sizes the hero independent of the
+          video, so there's no layout shift to guard against. Same focal
+          point shift on narrow screens as the photo it replaces. */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        disablePictureInPicture
+        disableRemotePlayback
+        controls={false}
+        controlsList="nodownload noplaybackrate noremoteplayback"
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-[52%_62%] pointer-events-none md:object-[50%_50%]"
+      >
+        <source src="/steak-hero.mp4" type="video/mp4" />
+      </video>
 
       {/* Overlay: strong enough for AA contrast, restrained enough to keep the
-          photograph readable. */}
+          video readable. */}
       <div
         aria-hidden="true"
         className="absolute inset-0 bg-gradient-to-b from-ink/85 via-ink/60 to-ink/95"

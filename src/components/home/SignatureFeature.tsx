@@ -24,7 +24,7 @@ export const SignatureFeature = () => {
         {/* Image half — full-bleed on large screens. */}
         <div className="relative min-h-[60vw] lg:min-h-[42rem]">
           <img
-            src="/steak.jpg"
+            src="/steak1.jpg"
             alt="Two seared steaks topped with garlic herb butter and rosemary, resting in a cast iron pan"
             width={1200}
             height={1800}
