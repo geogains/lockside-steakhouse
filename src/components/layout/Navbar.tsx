@@ -149,12 +149,20 @@ export const Navbar = () => {
             NAV_HEIGHT,
           )}
         >
+          {/* Absolutely centred on mobile/tablet, independent of the
+              hamburger control's width to the right — flex justify-between
+              alone would leave it visibly off-centre, pulled toward
+              whichever side has less on it. Reverts to a normal in-flow
+              flex item at lg, where the desktop nav sits either side of it
+              instead. */}
           <Link
             to="/"
-            className="flex min-w-0 shrink-0 items-center py-2"
+            className="absolute left-1/2 top-1/2 flex min-w-0 shrink-0 -translate-x-1/2
+                       -translate-y-1/2 items-center py-2
+                       lg:static lg:left-auto lg:top-auto lg:transform-none"
             aria-label={`${restaurant.name} — home`}
           >
-            <Logo className="h-11 w-auto md:h-14" />
+            <Logo className="h-12 w-auto md:h-16" />
           </Link>
 
           {/* Desktop navigation */}
@@ -176,7 +184,15 @@ export const Navbar = () => {
             ))}
           </nav>
 
-          <div className="flex items-center gap-2">
+          {/* relative z-10: guarantees this stays above the absolutely
+              positioned, centred logo and stays reachable, even though the
+              logo is no longer a normal flex sibling below lg. ml-auto
+              keeps it pinned to the far right on its own — the row can no
+              longer rely on `justify-between` against the logo for that,
+              since the logo isn't a flex participant at these widths. At
+              lg this is a no-op: the logo is back in flow and this item was
+              already last in a justify-between row. */}
+          <div className="relative z-10 ml-auto flex items-center gap-2">
             <a
               href={`tel:${restaurant.telephone.dial}`}
               className="hidden h-11 w-11 items-center justify-center rounded-card border border-line

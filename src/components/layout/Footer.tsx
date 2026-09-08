@@ -14,7 +14,7 @@ export const Footer = () => (
     <div className="container-content grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4 lg:gap-10">
       {/* Brand */}
       <div className="lg:col-span-1">
-        <Logo alt="The Lockside Steakhouse" className="h-14 w-auto" />
+        <Logo alt="The Lockside Steakhouse" className="h-16 w-auto" />
         <p className="mt-5 max-w-xs text-sm leading-relaxed text-fg-muted">
           Independent steakhouses in Wollaston, Stourbridge and Telford. Beef
           from a local butchery, generous plates and a warm welcome.
