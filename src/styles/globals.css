@@ -1,0 +1,227 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ------------------------------------------------------------------
+     Semantic tokens. The site is predominantly dark, so the dark surface
+     is the default. Any element (usually a <Section>) can opt into the
+     light parchment surface with data-surface="light".
+     ------------------------------------------------------------------ */
+  :root,
+  [data-surface="dark"] {
+    --bg: #14100b;
+    --bg-elevated: #1f1710;
+    --fg: #f7f2e8;
+    --fg-muted: #c6baa7;
+    --fg-subtle: #94886f;
+    --line: rgba(240, 204, 108, 0.16);
+    --accent: #f0cc6c;
+    --accent-2: #d3564a;
+    --focus: #f0cc6c;
+    /* Text colour for content sitting directly on --accent (e.g. a button's
+       hover fill). Dark surface's accent is a pale gold, so dark ink reads
+       clearly on it. */
+    --accent-contrast: #14100b;
+  }
+
+  [data-surface="light"] {
+    --bg: #f4efe4;
+    --bg-elevated: #fbf8f2;
+    --fg: #221a0e;
+    --fg-muted: #55483a;
+    --fg-subtle: #7a6857;
+    --line: rgba(34, 26, 14, 0.14);
+    --accent: #7e1d18;
+    --accent-2: #7c6326;
+    --focus: #7e1d18;
+    /* Light surface's accent is a dark red, so it needs light text —
+       the opposite of the dark surface's pale gold accent above. */
+    --accent-contrast: #fbf8f2;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor targets so the fixed header never covers a heading. */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: #14100b;
+    color: #f7f2e8;
+    font-family: theme("fontFamily.body");
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: theme("fontFamily.display");
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+  }
+
+  /* Bebas Neue is uppercase-only by design; make that explicit rather than
+     relying on the font to do it, so fallbacks look intentional too. */
+  h1,
+  h2,
+  h3 {
+    text-transform: uppercase;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus, #f0cc6c);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Remove the default focus ring only where we have supplied our own. */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  ::selection {
+    background: #f0cc6c;
+    color: #14100b;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@layer components {
+  .container-content {
+    width: 100%;
+    max-width: theme("maxWidth.content");
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .container-content {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .container-content {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Safe-area padding for notched devices on full-bleed fixed elements. */
+  .safe-x {
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+    padding-right: max(1.25rem, env(safe-area-inset-right));
+  }
+
+  .safe-b {
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+
+  .text-shadow-cinematic {
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Hairline rule used between menu item name and price. */
+  .price-leader::after {
+    content: "";
+    flex: 1 1 auto;
+    margin: 0 0.6rem;
+    border-bottom: 1px dotted var(--line);
+    transform: translateY(-0.28em);
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Vertical fade used by the review columns. */
+  .mask-fade-y {
+    mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+  }
+
+  /* Continuous review marquee. A plain CSS animation rather than a JS-driven
+     one: both the loop distance (--scroll-distance) and each column's speed
+     (--scroll-duration) are set per column from the real measured DOM, so
+     the browser's own animation engine runs the whole thing on the
+     compositor with zero per-frame JavaScript. Durations are deliberately
+     staggered per column (never delays), so columns start together and
+     drift out of sync purely from their differing speeds. */
+  .reviews-track {
+    animation: reviews-scroll var(--scroll-duration, 13s) linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes reviews-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(0, calc(-1 * var(--scroll-distance, 0px)), 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reviews-track {
+      animation: none;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------
+   Reduced motion. Motion is decorative throughout, so it is safe to
+   disable globally; Framer Motion components additionally check the
+   preference via useReducedMotion so they render in their end state.
+   -------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    word-break: break-all;
+  }
+}
