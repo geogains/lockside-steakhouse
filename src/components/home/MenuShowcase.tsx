@@ -40,7 +40,11 @@ export const MenuShowcase = () => {
     .filter((menu): menu is NonNullable<typeof menu> => Boolean(menu));
 
   return (
-    <Section id="menus" surface="dark" className="py-20 md:py-28">
+    <Section
+      id="menus"
+      surface="dark"
+      className="bg-surface py-20 md:py-28"
+    >
       <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
         <SectionHeading
           eyebrow="What's on"

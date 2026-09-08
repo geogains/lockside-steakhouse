@@ -12,28 +12,12 @@ import { useSeo } from "@/hooks/useSeo";
 import { breadcrumbSchema } from "@/lib/structuredData";
 import { cn } from "@/lib/cn";
 
-/* Menu section backgrounds cycle through this rhythm by position, not by
-   section id or menu — ids never repeat across the six menus and section
-   counts range from 1 (Nibbles) to 8 (Main), so a positional pattern is
-   the only thing that degrades gracefully everywhere. It groups sections
-   into loose zones rather than alternating every one: two light starters,
-   a four-section dark "mains" run (echoing the homepage's dark Our Steaks
-   feature) with hairline dividers between its own sections, a light Sides
-   beat, then a dark close for Desserts. Shorter menus simply see the
-   opening slice of the same rhythm. */
-const SECTION_SURFACE_RHYTHM = [
-  "light",
-  "light",
-  "dark",
-  "dark",
-  "dark",
-  "dark",
-  "light",
-  "dark",
-] as const;
-
+/* Menu section backgrounds alternate strictly by position — light, dark,
+   light, dark, ... — starting light so the first section of every menu
+   matches the light "menu header" block just above it. No two adjacent
+   sections ever share a background, regardless of menu or section count. */
 const surfaceForIndex = (index: number): "light" | "dark" =>
-  SECTION_SURFACE_RHYTHM[index % SECTION_SURFACE_RHYTHM.length] ?? "light";
+  index % 2 === 0 ? "light" : "dark";
 
 const MenusPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();

@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { Logo } from "@/components/shared/Logo";
 import { Eyebrow } from "@/components/shared/SectionHeading";
 import { restaurant, locations, hoursSummary } from "@/data/restaurant";
 import { footerNav, legalNav, navHref } from "@/data/navigation";
 
-const socialIcons: Record<string, typeof Facebook> = {
-  Facebook,
-  Instagram,
+const socialIcons: Record<string, string> = {
+  Facebook: "/facebook.png",
+  Instagram: "/insta.png",
 };
 
 export const Footer = () => (
@@ -25,7 +25,7 @@ export const Footer = () => (
         </p>
         <ul className="mt-6 flex gap-3">
           {restaurant.social.map((profile) => {
-            const Icon = socialIcons[profile.label];
+            const icon = socialIcons[profile.label];
             return (
               <li key={profile.label}>
                 <a
@@ -34,9 +34,13 @@ export const Footer = () => (
                   rel="noopener noreferrer"
                   aria-label={`${restaurant.shortName} on ${profile.label}, opens in a new tab`}
                   className="flex h-11 w-11 items-center justify-center rounded-card border border-line
-                             text-fg-muted transition-colors hover:border-brass hover:text-brass"
+                             transition-colors hover:border-brass"
                 >
-                  {Icon ? <Icon className="h-4 w-4" aria-hidden="true" /> : profile.label}
+                  {icon ? (
+                    <img src={icon} alt={profile.label} className="h-5 w-5 object-contain" />
+                  ) : (
+                    profile.label
+                  )}
                 </a>
               </li>
             );
