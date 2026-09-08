@@ -24,34 +24,56 @@ const proofPoints = [
   },
 ];
 
+/** The shopfront photo and its decorative corner accent — rendered twice
+ *  below (once for the desktop column, once inline on mobile/tablet) since
+ *  the two breakpoints want it in genuinely different positions relative
+ *  to the text, not just reordered within the same flow. Only one copy is
+ *  ever visible at a given width: the accent corner is itself desktop-only
+ *  already, and each wrapper below adds the responsive visibility. */
+const ApproachImage = () => (
+  <div className="relative">
+    <ImageWithFallback
+      src="/lockside.png"
+      alt="The Lockside Steakhouse's brick shopfront, with its wooden signage and bull-head emblem above the entrance"
+      width={1200}
+      height={1499}
+      objectPosition="50% 45%"
+      sizes="(min-width: 1024px) 45vw, 100vw"
+      className="aspect-[4/5] w-full rounded-card object-cover shadow-lift-light"
+    />
+    <span
+      aria-hidden="true"
+      className="pointer-events-none absolute -bottom-4 -right-4 hidden h-24 w-24
+                 border-b-2 border-r-2 border-ember/40 lg:block"
+    />
+  </div>
+);
+
 export const LocksideWay = () => (
   <Section id="the-lockside-way" surface="light" className="py-20 md:py-28">
     <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-      <Reveal className="order-2 lg:order-1">
-        <div className="relative">
-          <ImageWithFallback
-            src="/lockside.png"
-            alt="The Lockside Steakhouse's brick shopfront, with its wooden signage and bull-head emblem above the entrance"
-            width={1200}
-            height={1499}
-            objectPosition="50% 45%"
-            sizes="(min-width: 1024px) 45vw, 100vw"
-            className="aspect-[4/5] w-full rounded-card object-cover shadow-lift-light"
-          />
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute -bottom-4 -right-4 hidden h-24 w-24
-                       border-b-2 border-r-2 border-ember/40 lg:block"
-          />
-        </div>
+      <Reveal className="order-2 hidden lg:order-1 lg:block">
+        <ApproachImage />
       </Reveal>
 
       <div className="order-1 lg:order-2">
-        <SectionHeading
-          eyebrow="Our approach"
-          title="The Lockside way"
-          intro="We're dedicated to supporting local independent businesses, which is why all our beef comes from a local butchery and arrives fresh every day. They make sure the cattle are bred in a clean, green and ethical way — and because consistency is everything for our chefs, we work closely with them so every cut meets the Lockside specification."
-        />
+        <SectionHeading eyebrow="Our approach" title="The Lockside way" />
+
+        {/* Image sits here on mobile/tablet — right below the title, above
+            the intro copy. The desktop column to the left already shows it,
+            so this copy is hidden from lg: up rather than shown twice. */}
+        <Reveal className="mt-8 lg:hidden">
+          <ApproachImage />
+        </Reveal>
+
+        <p className="mt-6 max-w-prose text-base leading-relaxed text-fg-muted">
+          We're dedicated to supporting local independent businesses, which is
+          why all our beef comes from a local butchery and arrives fresh
+          every day. They make sure the cattle are bred in a clean, green and
+          ethical way — and because consistency is everything for our chefs,
+          we work closely with them so every cut meets the Lockside
+          specification.
+        </p>
 
         <ul className="mt-10 space-y-6">
           {proofPoints.map((point, index) => (

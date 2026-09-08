@@ -26,11 +26,16 @@ export const Visit = () => {
         intro="Now serving Stourbridge and Telford."
       />
 
-      {/* Both addresses are grouped first, then the shared contact details
-          and action buttons — currently Stourbridge's, since it's the only
-          location with confirmed phone/hours/booking/map. */}
-      <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:gap-14">
-        <Reveal className="space-y-9">
+      {/* Three blocks — locations, maps, then shared contact details — read
+          top to bottom in that order on the single-column mobile/tablet
+          stack. From lg up, the grid places locations and contact details
+          in the same left column (stacked, same gap as before) with maps
+          spanning both rows in the right column, so desktop keeps its
+          existing side-by-side look untouched: gap-y-9 reproduces the
+          original space-y-9 between locations and contact details, and
+          gap-x-14 reproduces the original column gap. */}
+      <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:gap-x-14 lg:gap-y-9">
+        <Reveal className="space-y-9 lg:col-start-1">
           <div className="flex gap-4">
             <MapPin className="mt-1 h-5 w-5 shrink-0 text-brass" aria-hidden="true" />
             <div>
@@ -71,7 +76,58 @@ export const Visit = () => {
               </address>
             </div>
           </div>
+        </Reveal>
 
+        {/* Maps — one landscape panel per location, stacked to roughly fill
+            the same tall footprint the single map used to occupy.
+            Each panel gets an explicit height rather than flex-sizing off
+            a sibling column: Google's simple "output=embed" map does not
+            re-measure itself if its box resizes after the iframe starts
+            loading, and matching a sibling's height via a shared grid row
+            was exactly that — the map would settle at a stale, undersized
+            viewport. A fixed height per breakpoint is stable from first
+            paint, so the embed always sizes correctly. `self-start` keeps
+            the panels at their own natural height rather than stretching
+            to fill the two rows they now span. */}
+        <Reveal
+          delay={0.12}
+          className="flex flex-col gap-4 lg:col-start-2 lg:row-span-2 lg:self-start"
+        >
+          <div>
+            <p className="font-body text-eyebrow font-semibold uppercase tracking-[0.18em] text-fg-subtle">
+              Stourbridge
+            </p>
+            <div className="mt-2 h-40 overflow-hidden rounded-card border border-line bg-elevated md:h-56">
+              <iframe
+                title="Lockside Steakhouse Stourbridge map"
+                src={stourbridge.urls.mapEmbed}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-full w-full border-0"
+              />
+            </div>
+          </div>
+
+          <div>
+            <p className="font-body text-eyebrow font-semibold uppercase tracking-[0.18em] text-fg-subtle">
+              Telford
+            </p>
+            <div className="mt-2 h-40 overflow-hidden rounded-card border border-line bg-elevated md:h-56">
+              <iframe
+                title="Lockside Steakhouse Telford map"
+                src={telford.urls.mapEmbed}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="h-full w-full border-0"
+              />
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Shared contact details — phone, email, hours — same content and
+            spacing as before, just its own grid item now so maps can sit
+            between it and the locations above on the mobile/tablet stack. */}
+        <Reveal delay={0.2} className="space-y-9 lg:col-start-1">
           <div className="flex gap-4">
             <Phone className="mt-1 h-5 w-5 shrink-0 text-brass" aria-hidden="true" />
             <div>
@@ -136,47 +192,6 @@ export const Visit = () => {
                 served {restaurant.breakfastService.summary.toLowerCase()}.{" "}
                 {restaurant.breakfastService.note}
               </p>
-            </div>
-          </div>
-        </Reveal>
-
-        {/* Maps — one landscape panel per location, stacked to roughly fill
-            the same tall footprint the single map used to occupy.
-            Each panel gets an explicit height rather than flex-sizing off
-            a sibling column: Google's simple "output=embed" map does not
-            re-measure itself if its box resizes after the iframe starts
-            loading, and matching a sibling's height via a shared grid row
-            was exactly that — the map would settle at a stale, undersized
-            viewport. A fixed height per breakpoint is stable from first
-            paint, so the embed always sizes correctly. */}
-        <Reveal delay={0.12} className="flex flex-col gap-4">
-          <div>
-            <p className="font-body text-eyebrow font-semibold uppercase tracking-[0.18em] text-fg-subtle">
-              Stourbridge
-            </p>
-            <div className="mt-2 h-40 overflow-hidden rounded-card border border-line bg-elevated md:h-56">
-              <iframe
-                title="Lockside Steakhouse Stourbridge map"
-                src={stourbridge.urls.mapEmbed}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="h-full w-full border-0"
-              />
-            </div>
-          </div>
-
-          <div>
-            <p className="font-body text-eyebrow font-semibold uppercase tracking-[0.18em] text-fg-subtle">
-              Telford
-            </p>
-            <div className="mt-2 h-40 overflow-hidden rounded-card border border-line bg-elevated md:h-56">
-              <iframe
-                title="Lockside Steakhouse Telford map"
-                src={telford.urls.mapEmbed}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="h-full w-full border-0"
-              />
             </div>
           </div>
         </Reveal>

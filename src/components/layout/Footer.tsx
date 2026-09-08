@@ -28,7 +28,9 @@ export const Footer = () => (
           Find Us
         </h2>
 
-        <div className="mt-5 space-y-6">
+        {/* Tablet/desktop (md+): unchanged from before — both addresses
+            stacked, phone and email nested under Stourbridge's. */}
+        <div className="mt-5 hidden space-y-6 md:block">
           {/* Stourbridge — the original, fully open location. */}
           <address className="space-y-3 text-sm not-italic text-fg-muted">
             <Eyebrow className="text-xs">Stourbridge</Eyebrow>
@@ -78,10 +80,68 @@ export const Footer = () => (
             </p>
           </address>
         </div>
+
+        {/* Mobile only: the two addresses sit side by side with a hairline
+            divider between them, and phone/email become one shared block
+            underneath both — rather than nested inside Stourbridge's. */}
+        <div className="mt-5 md:hidden">
+          <div className="grid grid-cols-2 divide-x divide-line">
+            <address className="space-y-3 pr-4 text-sm not-italic text-fg-muted">
+              <Eyebrow className="text-xs">Stourbridge</Eyebrow>
+              <p className="flex gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brass/70" aria-hidden="true" />
+                <span>
+                  {locations.stourbridge.street}
+                  <br />
+                  {locations.stourbridge.locality}
+                  <br />
+                  {locations.stourbridge.postcode}
+                </span>
+              </p>
+            </address>
+
+            <address className="space-y-3 pl-4 text-sm not-italic text-fg-muted">
+              <Eyebrow className="text-xs">Telford</Eyebrow>
+              <p className="flex gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brass/70" aria-hidden="true" />
+                <span>
+                  {locations.telford.street}
+                  <br />
+                  {locations.telford.locality}
+                  <br />
+                  {locations.telford.postcode}
+                </span>
+              </p>
+            </address>
+          </div>
+
+          <div className="mt-6 space-y-3 border-t border-line pt-6 text-sm text-fg-muted">
+            <p className="flex gap-3">
+              <Phone className="h-4 w-4 shrink-0 text-brass/70" aria-hidden="true" />
+              <a
+                href={`tel:${restaurant.telephone.dial}`}
+                className="transition-colors hover:text-brass"
+              >
+                {restaurant.telephone.display}
+              </a>
+            </p>
+            <p className="flex gap-3">
+              <Mail className="h-4 w-4 shrink-0 text-brass/70" aria-hidden="true" />
+              <a
+                href={`mailto:${restaurant.email}`}
+                className="break-all transition-colors hover:text-brass"
+              >
+                {restaurant.email}
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Hours */}
-      <div>
+      {/* Hours — hidden on mobile; the homepage Find Us section and the
+          footer's own contact details already cover the essentials there,
+          and this list ran long on a narrow single-column footer. */}
+      <div className="hidden md:block">
         <h2 className="font-display text-base tracking-[0.22em] text-brass">
           Opening Hours
         </h2>
@@ -99,8 +159,9 @@ export const Footer = () => (
         </dl>
       </div>
 
-      {/* Links */}
-      <div>
+      {/* Links — hidden on mobile; these routes are already reachable from
+          the hamburger menu, so this list is redundant on a narrow footer. */}
+      <div className="hidden md:block">
         <h2 className="font-display text-base tracking-[0.22em] text-brass">
           Explore
         </h2>
