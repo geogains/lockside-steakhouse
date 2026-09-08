@@ -1,5 +1,4 @@
 import { Beef, Handshake, Store } from "lucide-react";
-import wayImage from "@/assets/gallery/gallery-steak-beef-dripping.webp";
 import { Section } from "@/components/shared/Section";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Reveal } from "@/components/shared/Reveal";
@@ -31,10 +30,10 @@ export const LocksideWay = () => (
       <Reveal className="order-2 lg:order-1">
         <div className="relative">
           <ImageWithFallback
-            src={wayImage}
-            alt="A chargrilled steak on a board beside a pot of beef dripping sauce and a cup of chunky chips"
+            src="/lockside.png"
+            alt="The Lockside Steakhouse's brick shopfront, with its wooden signage and bull-head emblem above the entrance"
             width={1200}
-            height={1496}
+            height={1499}
             objectPosition="50% 45%"
             sizes="(min-width: 1024px) 45vw, 100vw"
             className="aspect-[4/5] w-full rounded-card object-cover shadow-lift-light"

@@ -112,8 +112,16 @@ export const Navbar = () => {
     };
 
     document.addEventListener("keydown", onKeyDown);
-    /* Move focus into the panel so keyboard users are not left behind. */
-    panelRef.current?.querySelector<HTMLElement>("a, button")?.focus();
+    /* Move focus into the panel so keyboard users are not left behind.
+     * This focuses the panel itself, not its first link — focusing that
+     * link programmatically made browsers treat it as focus-visible, so
+     * "About" (simply the first item in the list) opened every time the
+     * menu opened wearing a gold focus ring nobody had asked for, on touch
+     * as well as keyboard. Focusing the (tabIndex={-1}) panel container
+     * sidesteps that: real keyboard focus only ever lands on a nav item
+     * when the user actually presses Tab, which is exactly when a focus
+     * ring is warranted. */
+    panelRef.current?.focus({ preventScroll: true });
 
     return () => {
       document.removeEventListener("keydown", onKeyDown);
@@ -215,6 +223,7 @@ export const Navbar = () => {
           <motion.div
             id="mobile-navigation"
             ref={panelRef}
+            tabIndex={-1}
             data-surface="dark"
             {...(reduced
               ? {}
@@ -225,7 +234,7 @@ export const Navbar = () => {
                   transition: { duration: 0.25, ease: [0.22, 0.61, 0.36, 1] },
                 })}
             className="fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-ink
-                       pt-24 safe-b md:pt-28 lg:hidden"
+                       pt-24 safe-b outline-none md:pt-28 lg:hidden"
           >
             <nav
               aria-label="Mobile"

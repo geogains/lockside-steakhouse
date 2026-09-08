@@ -125,8 +125,12 @@ export const restaurant = {
   telephone: locations.stourbridge.telephone,
   email: "contact@locksidesteakhouse.com",
 
-  /** Canonical production origin. Update if the domain changes. */
-  siteUrl: "https://locksidesteakhouse.com",
+  /**
+   * Canonical origin used for canonical links, Open Graph/Twitter URLs and
+   * structured data. Currently the Vercel demo deployment; swap to the real
+   * production domain once one is live.
+   */
+  siteUrl: "https://lockside-steakhouse.vercel.app",
 
   urls: {
     /**
