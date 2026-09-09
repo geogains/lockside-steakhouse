@@ -14,7 +14,7 @@ export const restaurantSchema = (): Record<string, unknown> => ({
   name: locations.stourbridge.name,
   legalName: restaurant.legalName,
   url: restaurant.siteUrl,
-  image: `${restaurant.siteUrl}/lockside-preview1.png?v=3`,
+  image: `${restaurant.siteUrl}/lockside-preview2.png?v=3`,
   telephone: restaurant.telephone.dial,
   email: restaurant.email,
   address: {
