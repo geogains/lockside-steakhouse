@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Lockside Steakhouse | Stourbridge &amp; Telford</title>
+    <meta name="robots" content="noindex,follow" />
+
+    <!-- A dedicated, static sharing endpoint. It exists purely so social
+         crawlers (Messenger's in particular) have a URL with no prior
+         cached preview to fall back on, separate from the homepage's own
+         canonical og:url. og:url below points at THIS page, deliberately —
+         pointing it back at "/" would make Meta treat this as the same
+         cached homepage share it's already stuck on. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://lockside-steakhouse.vercel.app/share" />
+    <meta property="og:site_name" content="The Lockside Steakhouse" />
+    <meta property="og:title" content="The Lockside Steakhouse | Stourbridge & Telford" />
+    <meta
+      property="og:description"
+      content="Local beef, generous plates and a warm welcome — independent steakhouses in Stourbridge and Telford."
+    />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:image" content="https://lockside-steakhouse.vercel.app/lockside-preview1.png?v=3" />
+    <meta property="og:image:url" content="https://lockside-steakhouse.vercel.app/lockside-preview1.png?v=3" />
+    <meta property="og:image:secure_url" content="https://lockside-steakhouse.vercel.app/lockside-preview1.png?v=3" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1672" />
+    <meta property="og:image:height" content="941" />
+    <meta
+      property="og:image:alt"
+      content="The Lockside Steakhouse logo over a chargrilled steak, with Telford and Stourbridge listed as our locations"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Lockside Steakhouse | Stourbridge & Telford" />
+    <meta
+      name="twitter:description"
+      content="Local beef, generous plates and a warm welcome — independent steakhouses in Stourbridge and Telford."
+    />
+    <meta name="twitter:image" content="https://lockside-steakhouse.vercel.app/lockside-preview1.png?v=3" />
+
+    <!-- Human visitors only. Crawlers (Facebook/Messenger/Twitter's bots)
+         never execute JavaScript, so this never runs for them — they only
+         ever read the static meta tags above. A script-based redirect is
+         used instead of <meta http-equiv="refresh">, which some more
+         browser-like crawlers do follow, specifically so nothing here can
+         ever pull a crawler away before it reads the tags. -->
+    <script>
+      window.location.replace("https://lockside-steakhouse.vercel.app/");
+    </script>
+  </head>
+  <body>
+    <p>
+      Redirecting to
+      <a href="https://lockside-steakhouse.vercel.app/">The Lockside Steakhouse</a>&hellip;
+    </p>
+  </body>
+</html>
