@@ -42,7 +42,7 @@ export const useSeo = ({
   title,
   description,
   path,
-  image = "/lockside-preview1.png",
+  image = "/lockside-preview1.png?v=3",
   structuredData,
   noIndex = false,
 }: SeoOptions) => {
